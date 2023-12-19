@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net472</TargetFramework>
+        <RootNamespace>BG3_Modders_Unitool</RootNamespace>
+        <Nullable>enable</Nullable>
+        <AssemblyName>bg3-modders-unitool</AssemblyName>
+        <LangVersion>latest</LangVersion>
+        
+        <!--ILRepack settings-->
+        <DoILRepack>false</DoILRepack> <!--so that our custom ILRepack.targets is used instead-->
+
+        <MultitoolFolder>C:\Program Files\bg3-modders-multitool</MultitoolFolder>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="bg3-modders-multitool.exe"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="bg3-modders-multitool"/>
+        <Reference Include="PresentationCore"/>
+        <Reference Include="PresentationFramework"/>
+        <Reference Include="WindowsBase"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AlphaFS" Version="2.2.6" />
+        <PackageReference Include="CommandLineParser" Version="2.9.1"/>
+        <PackageReference Include="ILRepack.Lib.MSBuild" Version="2.1.18" />
+    </ItemGroup>
+
+
+    <Target Name="CopyOutput" AfterTargets="Build" Condition="Exists('$(TargetDir)$(TargetName).exe')">
+        <Copy SourceFiles="$(TargetDir)$(TargetName).exe"
+              DestinationFiles="$(MultitoolFolder)\$(ProjectName).exe"/>
+    </Target>
+
+</Project>
