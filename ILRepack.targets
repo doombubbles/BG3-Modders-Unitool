@@ -6,7 +6,6 @@
         <ItemGroup>
             <InputAssemblies Include="$(OutputPath)\$(AssemblyName).exe" />
             <InputAssemblies Include="$(OutputPath)\CommandLine.dll"/>
-            <InputAssemblies Include="$(OutputPath)\AlphaFS.dll"/>
         </ItemGroup>
 
         <!--<ItemGroup>

@@ -1,0 +1,1 @@
+﻿# Baldur's Gate 3 Modders' Unitool

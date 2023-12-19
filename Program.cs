@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
-using Alphaleonis.Win32.Filesystem;
 using bg3_modders_multitool.Services;
 using bg3_modders_multitool.ViewModels;
 using CommandLine;
 using CommandLine.Text;
-using Directory = Alphaleonis.Win32.Filesystem.Directory;
-using File = Alphaleonis.Win32.Filesystem.File;
-using Path = Alphaleonis.Win32.Filesystem.Path;
-
 namespace BG3_Modders_Unitool;
 
 public class Program
@@ -68,13 +64,16 @@ public class Program
         }
 
 
-        if (o.Zip && DragAndDropHelper.GenerateInfoJson(metaList))
+        if (o.Zip)
         {
+            DragAndDropHelper.GenerateInfoJson(metaList);
             DragAndDropHelper.GenerateZip(Path.Combine(dest, "_"), modName);
         }
         else
         {
-            File.Move(output, Path.Combine(dest, modName + ".pak"), MoveOptions.ReplaceExisting);
+            var destFile = Path.Combine(dest, modName + ".pak");
+            if (File.Exists(destFile)) File.Delete(destFile);
+            File.Move(output, destFile);
         }
 
         DragAndDropHelper.CleanTempDirectory();
